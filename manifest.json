@@ -1,0 +1,11 @@
+{
+	"id": "tag-flow",
+	"name": "Tag Flow",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "TagFlow auto-updates note lists based on tags, streamlining your Obsidian knowledge management experience.",
+	"author": "Tai Alt",
+	"authorUrl": "https://www.taialt.com/",
+	"fundingUrl": "https://www.taialt.com/",
+	"isDesktopOnly": false
+}
