@@ -1,97 +1,95 @@
-### Description:
+# Obsidian Sample Plugin
 
-The "Tag Flow" plugin for Obsidian serves as a tool to streamline the generation and administration of note lists based on specific tags, while maintaining the outgoing links functionality. This plugin automatically crafts and refreshes these lists within a user's note, offering a live, simple-to-navigate view of all notes associated with a certain tag. Importantly, all data pertaining to the lists is safely stored in a JSON file within the user's vault.
+This is a sample plugin for Obsidian (https://obsidian.md).
 
-### Functionalities:
+This project uses Typescript to provide type checking and documentation.
+The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
 
-1. **Tag Selection Modal**: The plugin provides a modal window to select a tag from all existing tags in the vault. The selected tag is then used to create a new list in the active note.
-    
-2. **List Creation**: The plugin creates a list of links to all notes tagged with the selected keyword. The list is inserted at the cursor's location in the active note. Each list is associated with a unique ID to support multiple lists of the same tag in a single note.
-    
-3. **List Updating**: The plugin automatically updates the created lists based on various triggers such as a change in workspace layout, an active leaf change, a new list creation, a file save, and Obsidian's open and close. The updated list contains links to all notes with the list's tag.
-    
-4. **Data Persistence**: The plugin saves data, including the tag, unique ID, and note path for each list, to ensure that the state is maintained between sessions. When Obsidian is reopened, the plugin loads the saved data to restore all lists.
-    
-5. **List Deletion**: The plugin allows users to delete lists. When invoked, it opens a modal displaying all lists in the current note identified by their tags and unique IDs. The selected list is removed from the note and the stored data.
-    
-6. **File Change Handling**: The plugin listens for file changes and updates the list of all tags in the vault. If the changed file contains a list, the plugin updates that list accordingly.
-    
-7. **Error Handling**: The plugin has built-in error handling to catch and log potential errors, particularly during the data loading process.
-    
-8. **Integration with Obsidian Interface**: The plugin's commands are integrated into Obsidian's command palette for easy access and usability.
-    
+**Note:** The Obsidian API is still in early alpha and is subject to change at any time!
 
-This plugin is designed to be a robust and helpful tool for managing and navigating notes based on tags within the Obsidian environment, improving the user's productivity and note-taking experience.
+This sample plugin demonstrates some of the basic functionality the plugin API can do.
+- Adds a ribbon icon, which shows a Notice when clicked.
+- Adds a command "Open Sample Modal" which opens a Modal.
+- Adds a plugin setting tab to the settings page.
+- Registers a global click event and output 'click' to the console.
+- Registers a global interval which logs 'setInterval' to the console.
 
+## First time developing plugins?
 
-### Debugging 
+Quick starting guide for new plugin devs:
 
-1. **Tag Selection Modal**:
-    - [ ] Verify that the tag selection modal displays all the tags correctly.
-    - [ ] Check the behavior when a tag is selected (it should trigger list creation).
-    - [ ] Verify the modal's behavior on opening and closing.
-    - [ ] Test the modal's behavior with no tags available.
+- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
+- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
+- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
+- Install NodeJS, then run `npm i` in the command line under your repo folder.
+- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
+- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
+- Reload Obsidian to load the new version of your plugin.
+- Enable plugin in settings window.
+- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
 
-2. **List Creation**:
-    - [ ] Check the list creation when a tag is selected from the modal.
-    - [ ] Verify that the list contains links to all notes with the selected tag.
-    - [ ] Check the location of the created list in the active note (should be at the cursor's location).
-    - [ ] Ensure the list is enclosed within the correct start and end anchors.
-    - [ ] Test list creation with various tags and notes.
-    - [ ] Verify the list creation with a tag that has no associated notes.
+## Releasing new releases
 
-3. **Unique List ID**:
-    - [ ] Ensure each list is associated with a unique ID.
-    - [ ] Verify that the unique ID is included in the start and end anchors.
-    - [ ] Check that the unique ID is correctly stored in the plugin's data.
+- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
+- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
+- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
+- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
+- Publish the release.
 
-4. **Multiple Lists in a Note**:
-    - [ ] Test creating multiple lists in the same note.
-    - [ ] Test creating lists with the same tag in the same note.
-    - [ ] Ensure each list is independent and updates correctly.
+> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
+> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
 
-5. **List Updating**:
-    - [ ] Check the list updating when there is a change in the workspace layout.
-    - [ ] Verify the list updating when the active leaf changes.
-    - [ ] Check the list updating when a new list is created.
-    - [ ] Test the list updating when a file is saved.
-    - [ ] Verify the list updating on Obsidian's open and close.
-    - [ ] Ensure the updated list contains links to all notes with the list's tag.
+## Adding your plugin to the community plugin list
 
-6. **Data Persistence**:
-    - [ ] Check whether the plugin saves the data correctly.
-    - [ ] Verify that the saved data includes the tag, unique ID, and note path for each list.
-    - [ ] Test the plugin's behavior after closing and reopening Obsidian. The plugin should load the data and all lists should be as they were before closing.
-    - [ ] Check the plugin's behavior with an empty data file.
-    - [ ] Test the plugin's behavior with a corrupted data file.
+- Check https://github.com/obsidianmd/obsidian-releases/blob/master/plugin-review.md
+- Publish an initial version.
+- Make sure you have a `README.md` file in the root of your repo.
+- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
 
-7. **List Deletion**:
-    - [ ] Check the list deletion function.
-    - [ ] Verify that a modal opens displaying all lists in the current note, identified by their tags and unique IDs.
-    - [ ] Test the deletion of a list. The list should be removed from the note and the stored data.
-    - [ ] Test deleting the last list in a note.
-    - [ ] Test deleting a list from a note with multiple lists.
+## How to use
 
-8. **File Change Handling**:
-    - [ ] Check how the plugin handles file changes.
-    - [ ] Verify the plugin updates all tags from the vault.
-    - [ ] Check the plugin updates all lists if the changed file contains a list.
-    - [ ] Test file change handling with various file contents and changes.
+- Clone this repo.
+- `npm i` or `yarn` to install dependencies
+- `npm run dev` to start compilation in watch mode.
 
-9. **Error Handling**:
-    - [ ] Test the plugin's error handling by manually creating errors, such as corrupting the data file.
-    - [ ] Verify the plugin catches and logs the error correctly.
+## Manually installing the plugin
 
-10. **Performance**:
-    - [ ] Check the plugin's performance with a small number of notes and tags.
-    - [ ] Verify the plugin's performance with a large number of notes and tags.
-    - [ ] Test the plugin's performance during intensive operations such as bulk list updating or file changes.
+- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
 
-11. **Compatibility with Other Plugins**:
-    - [ ] Test the plugin with other plugins enabled.
-    - [ ] Check for any conflicts or issues caused by the interaction of this plugin with others.
+## Improve code quality with eslint (optional)
+- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
+- To use eslint with this project, make sure to install eslint from terminal:
+  - `npm install -g eslint`
+- To use eslint to analyze this project use this command:
+  - `eslint main.ts`
+  - eslint will then create a report with suggestions for code improvement by file and line number.
+- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
+  - `eslint .\src\`
 
-12. **User Interface and Experience**:
-    - [ ] Check the plugin's integration with Obsidian's interface.
-    - [ ] Verify the plugin's commands appear correctly in the command palette.
-    - [ ] Test the plugin's responsiveness and ease of use.
+## Funding URL
+
+You can include funding URLs where people who use your plugin can financially support it.
+
+The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
+
+```json
+{
+    "fundingUrl": "https://buymeacoffee.com"
+}
+```
+
+If you have multiple URLs, you can also do:
+
+```json
+{
+    "fundingUrl": {
+        "Buy Me a Coffee": "https://buymeacoffee.com",
+        "GitHub Sponsor": "https://github.com/sponsors",
+        "Patreon": "https://www.patreon.com/"
+    }
+}
+```
+
+## API Documentation
+
+See https://github.com/obsidianmd/obsidian-api
