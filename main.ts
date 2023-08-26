@@ -358,7 +358,7 @@ export default class TagFlowPlugin extends Plugin {
 			console.log({ filesWithTag });
 
 			const links = filesWithTag
-				.map((file) => `[[${file.basename}]]`)
+				.map((file) => `- [[${file.basename}]]`)
 				.join("\n");
 
 			// * Read the contents of the currently opened file
@@ -444,10 +444,16 @@ export default class TagFlowPlugin extends Plugin {
 		let frontmatterTagsArr;
 
 		const cleanedContent = await this.filterContent(file);
+		console.log(
+			"cleanedContent for the file: ",
+			file.basename,
+			cleanedContent
+		);
 		const tagMatches = cleanedContent.match(/#([a-zA-Z0-9_-]+)/g);
 
-		const frontMatterRegex = /^---\r?\n([\s\S]*?)\r?\n---\r?\n/;
+		const frontMatterRegex = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/;
 		const fmMatch = cleanedContent.match(frontMatterRegex);
+		console.log("fmMatch: ", fmMatch);
 		if (fmMatch && cleanedContent.startsWith(fmMatch[0])) {
 			console.log("frontmatter exists");
 

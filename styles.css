@@ -6,3 +6,30 @@ available in the app when your plugin is enabled.
 If your plugin does not need CSS, delete this file.
 
 */
+
+/* Remove underline from internal links */
+.markdown-source-view.mod-cm6 .cm-underline {
+	text-decoration: none !important;
+}
+
+/* Remove underline from external links */
+.markdown-source-view.mod-cm6 .cm-underline {
+	text-decoration: none !important;
+}
+
+/* Remove underline from internal links on hover */
+.markdown-source-view.mod-cm6 .cm-underline:hover {
+	text-decoration: none !important;
+}
+
+.markdown-source-view.mod-cm6:hover {
+	text-decoration: none !important;
+}
+
+/* Remove underline from external links on hover */
+.markdown-source-view.mod-cm6 .cm-underline:hover {
+	text-decoration: none !important;
+}
+.markdown-source-view.mod-cm6:hover {
+	text-decoration: none !important;
+}
