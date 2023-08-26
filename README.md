@@ -1,8 +1,8 @@
+# Tag Flow for Obsidian
 
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-Donate-yellow.svg)]( https://www.buymeacoffee.com/taialt )
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]( https://opensource.org/licenses/MIT )  
 ![Status: Beta](https://img.shields.io/badge/Status-Beta-orange)
-# Tag Flow for Obsidian
 
 ## Status: Beta Version
 :warning: This plugin is currently in beta. While it is functional and has been tested to work well, please be aware that some features are still under development and may not be fully stable.
@@ -29,7 +29,7 @@ Streamline the generation and administration of note lists based on specific tag
 
 ## Demo
 
-https://github.com/Taialt97/Tag-Flow/blob/master/video.gif?raw=true
+![video](https://github.com/Taialt97/Tag-Flow/assets/45160819/5b44c661-2084-4bd6-b27e-24451a2f9c04)
 
 ## How to Use
 
