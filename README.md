@@ -29,7 +29,7 @@ Streamline the generation and administration of note lists based on specific tag
 
 ## Demo
 
-![video](https://github.com/Taialt97/Tag-Flow/assets/45160819/5b44c661-2084-4bd6-b27e-24451a2f9c04)
+![2023-08-26 10-52-21](https://github.com/Taialt97/Tag-Flow/assets/45160819/5346c595-ea93-446a-bc09-565237b24646)
 
 ## How to Use
 
