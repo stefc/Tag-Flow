@@ -31,6 +31,24 @@ Streamline the generation and administration of note lists based on specific tag
 
 ![2023-08-26 10-52-21](https://github.com/Taialt97/Tag-Flow/assets/45160819/5346c595-ea93-446a-bc09-565237b24646)
 
+## Installation Guide
+
+1. Download the zip file called Tag Flow Beta
+2. Unzip the folder contained in the zip file
+3. Move the folder to: Your Obsidian Vault > .obsidian > Plugin
+4. If you can't find the .obsidian folder, it's likely hidden.
+
+To show hidden files:
+
+On Mac:
+- Open Finder
+- Press Command + Shift + . (dot)
+
+On Windows:
+- Open File Explorer
+- Click on 'View' tab
+- Check 'Hidden items' checkBox in the Show/hide section
+
 ## How to Use
 
 To create a new tag-based list in your active note, open the Tag Selection Modal via Obsidian's command palette.  Navigate to Tag Flow, Choose your desired tag, and a new list will be inserted at your cursor's location.
