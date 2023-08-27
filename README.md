@@ -35,17 +35,6 @@ Streamline the generation and administration of note lists based on specific tag
 
 To create a new tag-based list in your active note, open the Tag Selection Modal via Obsidian's command palette.  Navigate to Tag Flow, Choose your desired tag, and a new list will be inserted at your cursor's location.
 
-## How to Install
-
-From within Obsidian:
-
-- Open Settings > Third-party plugin
-- Make sure Safe mode is off
-- Click Browse community plugins
-- Search for "Tag Flow"
-- Click Install
-- Once installed, close the community plugins window and activate the newly installed plugin
-
 ## Coming Soon: Planned Features
 
 The following are features we plan to implement in upcoming versions. Your feedback and contributions are welcome!
