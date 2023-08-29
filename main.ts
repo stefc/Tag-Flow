@@ -34,16 +34,12 @@ export default class TagFlowPlugin extends Plugin {
 			callback: () => this.createTagList(),
 		});
 
-		this.app.workspace.on("active-leaf-change", (leaf) => {
-			console.log("active-leaf-change");
+		this.app.workspace.on("active-leaf-change", () => {
 			this.updateLists();
 		});
 
-		// this.app.workspace.on("file-open", (file) => {});
-
 		this.app.workspace.on("layout-change", () => {
 			if (this.app.workspace.getLeavesOfType("graph").length > 0) {
-				console.log("layout-change");
 				this.updateLists();
 			}
 		});
@@ -54,7 +50,6 @@ export default class TagFlowPlugin extends Plugin {
 
 		this.registerEvent(
 			this.app.vault.on("create", (file) => {
-				console.log("new file created in the vault ");
 				this.tagCache.set(file.path, new Set());
 			})
 		);
@@ -63,7 +58,6 @@ export default class TagFlowPlugin extends Plugin {
 				if (!(file instanceof TFile)) return;
 				// oldPath = the previous path of the file
 				// file, the new file data i.e the new name of file alongwith other properties
-				console.log("RENAME EVENT", file.basename, file.path, oldPath);
 
 				const data = this.tagCache.get(oldPath) as Set<string>;
 				this.tagCache.delete(oldPath);
@@ -76,8 +70,6 @@ export default class TagFlowPlugin extends Plugin {
 					}
 					return tagList;
 				});
-
-				console.log("TagLists on renaming: ", this.lists);
 			})
 		);
 		this.registerEvent(
@@ -85,7 +77,6 @@ export default class TagFlowPlugin extends Plugin {
 				if (!(file instanceof TFile)) {
 					return;
 				}
-				console.log("File Deleted: ", file.name, file.path);
 				this.lists = this.lists
 					.map((tagList) => {
 						if (tagList.notePath !== file.path) {
@@ -95,8 +86,6 @@ export default class TagFlowPlugin extends Plugin {
 					.filter(Boolean) as TagList[];
 
 				if (this.tagCache.has(file.path)) {
-					console.log("tagCache has this file", file.path);
-
 					this.tagCache.delete(file.path);
 				}
 				await this.saveData();
@@ -117,7 +106,6 @@ export default class TagFlowPlugin extends Plugin {
 				this.tagCache.set(file.path, new Set(newTags));
 
 				if (this.tagChanged) {
-					console.log("tag changed");
 					this.updateLists();
 				}
 				if (this.hasSelectedTag) {
@@ -138,16 +126,7 @@ export default class TagFlowPlugin extends Plugin {
 		if (oldTags) {
 			// iterate through the tags in the tag cache for the currently modified file
 			tagChanged = [...newTags].some((element) => !oldTags.has(element));
-			if (tagChanged) {
-				console.log("True for tag change");
-			} else {
-				console.log("Not true for tag change");
-			}
 		}
-		console.log({ newTags, oldTags });
-		console.log({ lists: this.lists });
-		console.log({ tagCache: this.tagCache });
-
 		return tagChanged;
 	}
 	async filterContent(file: TFile) {
@@ -236,7 +215,6 @@ export default class TagFlowPlugin extends Plugin {
 	createTagList() {
 		this.allTags = this.fetchAllTags();
 		if (this.allTags.length > 0) {
-			console.log("yes tags");
 			new TagSuggester(this.app, this, this.allTags).open();
 		}
 	}
@@ -275,12 +253,8 @@ export default class TagFlowPlugin extends Plugin {
 				startIndex + startAnchor.length,
 				endIndex
 			);
-			console.log({ extractedContent }, { markdownLinks: links });
-
 			if (links.length > 0 && extractedContent === links) {
 				// the hyperlinks for tags inside the anchors are not modified so dont modify them again
-				console.log("Existing tags found for the tag: " + links);
-
 				return true;
 			}
 		}
@@ -328,8 +302,6 @@ export default class TagFlowPlugin extends Plugin {
 	}
 
 	async updateLists() {
-		console.log("update list");
-
 		if (!this.lists.length) {
 			console.log("no lists");
 			return;
@@ -355,7 +327,6 @@ export default class TagFlowPlugin extends Plugin {
 				const tags = this.tagCache.get(file.path);
 				return tags && tags.has(list.tag);
 			});
-			console.log({ filesWithTag });
 
 			const links = filesWithTag
 				.map((file) => `- [[${file.basename}]]`)
@@ -380,8 +351,6 @@ export default class TagFlowPlugin extends Plugin {
 			if (existingHyperlinks) {
 				continue;
 			}
-			console.log("gonna replace the tags");
-
 			await this.replaceAnchorContents(
 				startIndex,
 				endIndex,
@@ -412,18 +381,16 @@ export default class TagFlowPlugin extends Plugin {
 
 	async loadData() {
 		try {
-			console.log("loading data");
-
 			const content = await this.app.vault.adapter.read(
 				"tagFlowData.json"
 			);
 			const data = JSON.parse(content);
 
 			this.lists = data.lists;
-			this.addToCache();
 		} catch (error) {
 			console.error("Failed to load data:", error);
 		}
+		this.addToCache();
 	}
 
 	async addToCache() {
@@ -437,26 +404,18 @@ export default class TagFlowPlugin extends Plugin {
 			})
 		);
 		this.tagCache = tagMap;
-		console.log(this.tagCache);
 	}
 
 	async processTags(file: TFile) {
 		let frontmatterTagsArr;
 
 		const cleanedContent = await this.filterContent(file);
-		console.log(
-			"cleanedContent for the file: ",
-			file.basename,
-			cleanedContent
-		);
 		const tagMatches = cleanedContent.match(/#([a-zA-Z0-9_-]+)/g);
 
 		const frontMatterRegex = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/;
 		const fmMatch = cleanedContent.match(frontMatterRegex);
-		console.log("fmMatch: ", fmMatch);
-		if (fmMatch && cleanedContent.startsWith(fmMatch[0])) {
-			console.log("frontmatter exists");
 
+		if (fmMatch && cleanedContent.startsWith(fmMatch[0])) {
 			const frontMatterString = fmMatch[1];
 			const frontMatter: any = loadYAML(frontMatterString);
 			frontmatterTagsArr = frontMatter.tags
