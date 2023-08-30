@@ -53,52 +53,51 @@ On Windows:
 
 To create a new tag-based list in your active note, open the Tag Selection Modal via Obsidian's command palette.  Navigate to Tag Flow, Choose your desired tag, and a new list will be inserted at your cursor's location.
 
+## Known Issues
+1. If a list is initiated at the beginning of a note, it doesn't refresh properly. This has been observed on both Mac and Windows systems.
+2. Unexpected tags appear within the list, but this issue is exclusive to Mac.
+3. Front matter tags aren't recognized if the word "tags" starts with a capital 'T'.
+
 ## Coming Soon: Planned Features
 
 The following are features we plan to implement in upcoming versions. Your feedback and contributions are welcome!
 
-### 1. Adding All Tags List:
-
+1. Adding All Tags List:
 - **Description**: Maintain and display a list of all unique tags within the system.
 - **Implementation**:
     - Maintain a set or array to store all unique tags.
     - Provide a UI element to display this list.
     - Consider performance optimization if the number of tags is large.
 
-### 2. Adding Nested Tags:
-
+2. Adding Nested Tags:
 - **Description**: Support tags in the format `{{nameOfNote/NameOfNote}}`, allowing nested categorization.
 - **Implementation**:
     - Update the tag parsing logic to recognize nested tags.
     - Consider how to display and interact with nested tags in the UI.
     - Ensure compatibility with existing tag functionalities.
 
-### 3. Getter Header for Inline Tags:
-
+3. Getter Header for Inline Tags:
 - **Description**: Provide the ability to link to a specific tag within the content (not in YAML/front matter).
 - **Implementation**:
     - Extend the tag parsing logic to recognize inline tags.
     - Implement linking functionality to navigate to specific inline tags.
     - Consider UI/UX design for displaying and interacting with inline tags.
 
-### 4. Integration with Templates:
-
+4. Integration with Templates:
 - **Description**: Ensure the plugin works with Obsidian's templates.
 - **Implementation**:
     - Identify the specific issues preventing integration with templates.
     - Implement fixes or adjustments to ensure compatibility.
     - Test with various template scenarios to ensure robustness.
 
-### 5. Link to Specific Tag in Document:
-
+5. Link to Specific Tag in Document:
 - **Description**: Enable linking to a specific tag within a document, navigating to the exact location.
 - **Implementation**:
     - Enhance the tag linking logic to include the exact position within the document.
     - Provide UI controls to facilitate this navigation.
     - Ensure smooth navigation and highlight the target tag.
 
-### 6. User-Selectable List Types:
-
+6. User-Selectable List Types:
 - **Description**: Allow users to choose different types of tag lists (Simple List, Expanded List, Front Matter Only, Simple Inline, Expanded Inline).
 - **Implementation**:
     - Define the behavior and structure of each list type.
