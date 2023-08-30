@@ -50,7 +50,6 @@ Streamline the generation and administration of note lists based on specific tag
 <b>Mac:</b> Open Finder > Press Command + Shift + . (dot)
 </br>
 <b>Windows:</b> Open File Explorer > Click on 'View' tab > Check 'Hidden items' in the Show/hide section
-<details>
 
 ## Usage
 
