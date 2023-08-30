@@ -45,11 +45,8 @@ Streamline the generation and administration of note lists based on specific tag
 3. Move the folder to `Your Obsidian Vault > .obsidian > Plugin`.
 
 > **Note**: If you can't find the `.obsidian` folder, it's likely hidden.
-<details>
-<summary>Show hidden files on Windows and MacOS</summary>
-<b>Mac:</b> Open Finder > Press Command + Shift + . (dot)
-</br>
-<b>Windows:</b> Open File Explorer > Click on 'View' tab > Check 'Hidden items' in the Show/hide section
+**Mac:** Open Finder > Press Command + Shift + . (dot)
+**Windows:** Open File Explorer > Click on 'View' tab > Check 'Hidden items' in the Show/hide section
 
 ## Usage
 
