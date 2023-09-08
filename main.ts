@@ -195,15 +195,6 @@ export default class TagFlowPlugin extends Plugin {
 
 	fetchAllTags() {
 		const allTags = new Set<string>();
-		// let match: RegExpExecArray | null;
-
-		// for (const file of this.app.vault.getMarkdownFiles()) {
-		// 	const fileContent = await this.app.vault.cachedRead(file);
-		// 	const tagRegex = /#([a-zA-Z0-9_-]+)/g;
-		// 	while ((match = tagRegex.exec(fileContent))) {
-		// 		allTags.add(match[1]);
-		// 	}
-		// }
 		for (const tagSet of this.tagCache.values()) {
 			for (const tag of tagSet) {
 				allTags.add(tag.slice(1, tag.length));
@@ -406,36 +397,52 @@ export default class TagFlowPlugin extends Plugin {
 		this.tagCache = tagMap;
 	}
 
+
+
 	async processTags(file: TFile) {
-		let frontmatterTagsArr;
-
-		const cleanedContent = await this.filterContent(file);
-		const tagMatches = cleanedContent.match(/#([a-zA-Z0-9_-]+)/g);
-
-		const frontMatterRegex = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/;
-		const fmMatch = cleanedContent.match(frontMatterRegex);
-
-		if (fmMatch && cleanedContent.startsWith(fmMatch[0])) {
-			const frontMatterString = fmMatch[1];
-			const frontMatter: any = loadYAML(frontMatterString);
-			frontmatterTagsArr = frontMatter.tags
-				?.split(",")
-				?.map((tag: string) => {
-					tag = tag.trim();
-					if (tag !== "") return "#" + tag;
-				})
-				.filter(Boolean) as string[];
-		}
+		let frontmatterTagsArr: string[] | undefined = undefined;
 		let combinedTags: Set<string> = new Set();
-		if (tagMatches && frontmatterTagsArr) {
-			combinedTags = new Set([...tagMatches, ...frontmatterTagsArr]);
-		} else if (tagMatches) {
-			combinedTags = new Set([...tagMatches]);
-		} else if (frontmatterTagsArr) {
-			combinedTags = new Set([...frontmatterTagsArr]);
+	
+		try {
+			const cleanedContent = await this.filterContent(file);
+			const tagMatches = cleanedContent.match(/#([a-zA-Z0-9_-]+)/g);
+	
+			const frontMatterRegex = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/;
+			const fmMatch = cleanedContent.match(frontMatterRegex);
+	
+			if (fmMatch && cleanedContent.startsWith(fmMatch[0])) {
+				const frontMatterString = fmMatch[1];
+				const frontMatter: any = loadYAML(frontMatterString);
+				
+				// Check if frontMatter.tags is a string before calling split()
+				if (typeof frontMatter.tags === 'string') {
+					frontmatterTagsArr = frontMatter.tags
+						.split(',')
+						.map((tag: string) => tag.trim())
+						.filter((tag: string) => tag !== "")
+						.map((tag: string) => "#" + tag);
+				} else {
+					console.warn("frontMatter.tags is not a string. Skipping tag processing for front matter.");
+				}
+			}
+	
+			if (tagMatches && frontmatterTagsArr) {
+				combinedTags = new Set([...tagMatches, ...frontmatterTagsArr]);
+			} else if (tagMatches) {
+				combinedTags = new Set([...tagMatches]);
+			} else if (frontmatterTagsArr) {
+				combinedTags = new Set([...frontmatterTagsArr]);
+			}
+		} catch (error) {
+			console.error("An error occurred while processing tags:", error);
 		}
+	
 		return combinedTags;
 	}
+	
+
+
+
 	onunload() {
 		console.log("unloading plugin");
 	}
