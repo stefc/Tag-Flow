@@ -24,6 +24,6 @@ export default class DeleteListModal extends FuzzySuggestModal<TagList> {
 	}
 
 	onChooseItem(item: TagList) {
-		this.plugin.deleteList(item);
+		this.plugin.deleteList(item, null, null);
 	}
 }

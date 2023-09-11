@@ -28,9 +28,9 @@ export default class TagPromptModal extends FuzzySuggestModal<string> {
 	}
 
 	onChooseItem(item: string, evt: MouseEvent | KeyboardEvent) {
-		this.plugin.activeTag = item;
-		this.plugin.tagToListMap.set(item, this.plugin.originalNotePath);
-		this.plugin.updateList(item, this.plugin.originalNotePath);
+		// this.plugin.activeTag = item;
+		// this.plugin.tagToListMap.set(item, this.plugin.originalNotePath);
+		// this.plugin.updateList(item, this.plugin.originalNotePath);
 	}
 
 	renderSuggestion(item: FuzzyMatch<string>, el: HTMLElement) {
